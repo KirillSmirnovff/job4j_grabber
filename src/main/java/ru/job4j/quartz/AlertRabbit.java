@@ -16,16 +16,21 @@ import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
 
+    private static Connection getConnection(Properties cfg) throws SQLException {
+        return DriverManager.getConnection(
+                cfg.getProperty("url"),
+                cfg.getProperty("username"),
+                cfg.getProperty("password")
+        );
+    }
+
     public static void main(String[] args) {
         try (InputStream in = AlertRabbit.class.getClassLoader()
                 .getResourceAsStream("rabbit.properties")) {
             Properties cfg = new Properties();
             cfg.load(in);
             Class.forName(cfg.getProperty("driver-class-name"));
-            try (Connection cn = DriverManager.getConnection(
-                    cfg.getProperty("url"),
-                    cfg.getProperty("username"),
-                    cfg.getProperty("password"))) {
+            try (Connection cn = getConnection(cfg)) {
                 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
                 scheduler.start();
                 JobDataMap data = new JobDataMap();
