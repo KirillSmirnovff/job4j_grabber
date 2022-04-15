@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.job4j.grabber.utils.DateTimeParser;
-import ru.job4j.grabber.utils.HarbCareerDateTimeParser;
+import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -46,14 +46,16 @@ public class HabrCareerParse implements Parse {
         String vacancyLink = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
         LocalDateTime vacancyTime = dateTimeParser.parse(timeElement.attr("datetime"));
         String vacancyDesc = retrieveDescription(vacancyLink);
-        list.add(new Post(vacancyName, vacancyLink, vacancyDesc, vacancyTime));
+        Post post = new Post(vacancyName, vacancyLink, vacancyDesc, vacancyTime);
+        list.add(post);
+        System.out.println(post.getTitle() + " parsed.");
     }
 
     @Override
-    public List<Post> list(String link) {
+    public List<Post> list() {
         List<Post> result = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
-            Connection connection = Jsoup.connect(link + i);
+            Connection connection = Jsoup.connect(PAGE_LINK + i);
             try {
                 Document document = connection.get();
                 Elements rows = document.select(".vacancy-card__inner");
@@ -66,8 +68,8 @@ public class HabrCareerParse implements Parse {
     }
 
     public static void main(String[] args) {
-        HabrCareerParse parse = new HabrCareerParse(new HarbCareerDateTimeParser());
-        List<Post> vacancyList = parse.list(PAGE_LINK);
+        HabrCareerParse parse = new HabrCareerParse(new HabrCareerDateTimeParser());
+        List<Post> vacancyList = parse.list();
         for (Post post : vacancyList) {
             System.out.println(post);
         }
