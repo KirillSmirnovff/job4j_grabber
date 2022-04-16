@@ -85,12 +85,9 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{"
-                + "id=" + id
-                + ", title='" + title + '\''
-                + ", link='" + link + '\''
-                + ", description='" + description + '\''
-                + ", created=" + created
-                + '}';
+        return  "Вакансия: " + title + '\n'
+                + "Ссылка: " + link + '\n'
+                + "Описание: " + description + '\n'
+                + "Создана: " + created;
     }
 }
