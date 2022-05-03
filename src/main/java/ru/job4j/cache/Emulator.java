@@ -12,13 +12,22 @@ public class Emulator {
         DirFileCache cache = new DirFileCache(path);
         boolean run = true;
         while (run) {
-            System.out.println("Enter \"1\" to get from cache or to load in cache, if file is not already there. \nEnter \"2\" to Exit.");
+            System.out.println("""
+                    Enter "1" to get from cache.
+                    Enter "2" to load in cache.
+                    Enter "3" to Exit.""");
             String input = br.readLine();
             if ("1".equals(input)) {
                 System.out.println("Enter filename:");
                 String fileName = br.readLine();
-                System.out.println(cache.load(fileName));
+                System.out.println(cache.get(fileName));
             } else if ("2".equals(input)) {
+                System.out.println("Enter filename:");
+                String fileName = br.readLine();
+                String value = cache.load(fileName);
+                cache.put(fileName, value);
+                System.out.println("File loaded in cache");
+            } else if ("3".equals(input)) {
                 run = false;
                 System.out.println("Goodbye");
             } else {
