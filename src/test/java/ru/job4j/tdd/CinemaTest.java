@@ -2,7 +2,7 @@ package ru.job4j.tdd;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
