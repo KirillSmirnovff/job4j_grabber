@@ -11,7 +11,7 @@ public class GeneratorTest {
 
     @Test
     public void whenProduce() {
-        Generator generator = new PhraseGeneranor();
+        Generator generator = new PhraseGenerator();
         String template = "I am a ${name}, Who are ${subject}?";
         Map<String, String> args = Map.of(
                 "name", "Kirill Smirnov",
@@ -24,7 +24,7 @@ public class GeneratorTest {
 
     @Test
     public void whenIllegalArgumentsInTemplate() throws IllegalArgumentException {
-        Generator generator = new PhraseGeneranor();
+        Generator generator = new PhraseGenerator();
         String template = "I am a ${name}, Who are ${subject}?";
         Map<String, String> args = Map.of(
                 "subject", "you"
@@ -34,7 +34,7 @@ public class GeneratorTest {
 
     @Test
     public void whenIllegalArgumentsInArgs() throws IllegalArgumentException {
-        Generator generator = new PhraseGeneranor();
+        Generator generator = new PhraseGenerator();
         String template = "I am a ${name}, Who are ${subject}?";
         Map<String, String> args = Map.of(
                 "name", "Kirill Smirnov",
