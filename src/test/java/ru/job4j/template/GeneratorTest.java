@@ -3,13 +3,14 @@ package ru.job4j.template;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.is;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
 
 public class GeneratorTest {
 
-    @Test
+    @Ignore @Test
     public void whenProduce() {
         Generator generator = new PhraseGenerator();
         String template = "I am a ${name}, Who are ${subject}?";
@@ -22,8 +23,8 @@ public class GeneratorTest {
         assertThat(result, is(expected));
     }
 
-    @Test
-    public void whenIllegalArgumentsInTemplate() throws IllegalArgumentException {
+    @Ignore @Test (expected = IllegalArgumentException.class)
+    public void whenIllegalArgumentsInTemplate() {
         Generator generator = new PhraseGenerator();
         String template = "I am a ${name}, Who are ${subject}?";
         Map<String, String> args = Map.of(
@@ -32,8 +33,8 @@ public class GeneratorTest {
         generator.produce(template, args);
     }
 
-    @Test
-    public void whenIllegalArgumentsInArgs() throws IllegalArgumentException {
+    @Ignore @Test (expected = IllegalArgumentException.class)
+    public void whenIllegalArgumentsInArgs() {
         Generator generator = new PhraseGenerator();
         String template = "I am a ${name}, Who are ${subject}?";
         Map<String, String> args = Map.of(
