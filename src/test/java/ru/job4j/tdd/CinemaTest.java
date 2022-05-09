@@ -66,4 +66,5 @@ public class CinemaTest {
         date.set(2054, 6, 6, 21, 00);
         cinema.buy(account, 1, 1, date);
     }
+
 }
