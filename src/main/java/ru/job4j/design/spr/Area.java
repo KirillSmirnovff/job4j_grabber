@@ -1,4 +1,4 @@
-package ru.job4j.spr;
+package ru.job4j.design.spr;
 
 
 import java.util.Map;
