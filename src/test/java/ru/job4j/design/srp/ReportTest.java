@@ -4,6 +4,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Test;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ReportTest {
@@ -99,6 +102,75 @@ public class ReportTest {
                 .append(workerTwo.getName()).append(";")
                 .append(workerTwo.getSalary()).append(";")
                 .append(System.lineSeparator());
+        assertThat(engine.generate(em -> true), is(expect.toString()));
+    }
+
+    @Test
+    public void whenGeneratedXml() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        Employee worker = new Employee("Ivan", now, now, 650);
+        store.add(worker);
+        Report engine = new ReportXml(store);
+        StringBuilder expect = new StringBuilder()
+                .append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n")
+                .append("<employees>\n")
+                .append("    <employees>\n")
+                .append("        <fired>")
+                .append(format.format(worker.getFired().getTime()))
+                .append("</fired>\n")
+                .append("        <hired>")
+                .append(format.format(worker.getHired().getTime()))
+                .append("</hired>\n")
+                .append("        <name>")
+                .append(worker.getName())
+                .append("</name>\n")
+                .append("        <salary>")
+                .append(worker.getSalary())
+                .append("</salary>\n")
+                .append("    </employees>\n")
+                .append("</employees>\n");
+        assertThat(engine.generate(em -> true), is(expect.toString()));
+    }
+
+    @Test
+    public void whenGeneratedJson() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 650);
+        store.add(worker);
+        Report engine = new ReportJson(store);
+        StringBuilder expect = new StringBuilder()
+                .append("[{\"name\":\"")
+                .append(worker.getName())
+                .append("\",\"hired\":{\"year\":")
+                .append(now.get(Calendar.YEAR))
+                .append(",\"month\":")
+                .append(now.get(Calendar.MONTH))
+                .append(",\"dayOfMonth\":")
+                .append(now.get(Calendar.DAY_OF_MONTH))
+                .append(",\"hourOfDay\":")
+                .append(now.get(Calendar.HOUR_OF_DAY))
+                .append(",\"minute\":")
+                .append(now.get(Calendar.MINUTE))
+                .append(",\"second\":")
+                .append(now.get(Calendar.SECOND))
+                .append("},\"fired\":{\"year\":")
+                .append(now.get(Calendar.YEAR))
+                .append(",\"month\":")
+                .append(now.get(Calendar.MONTH))
+                .append(",\"dayOfMonth\":")
+                .append(now.get(Calendar.DAY_OF_MONTH))
+                .append(",\"hourOfDay\":")
+                .append(now.get(Calendar.HOUR_OF_DAY))
+                .append(",\"minute\":")
+                .append(now.get(Calendar.MINUTE))
+                .append(",\"second\":")
+                .append(now.get(Calendar.SECOND))
+                .append("},\"salary\":")
+                .append(worker.getSalary())
+                .append("}]");
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 }
