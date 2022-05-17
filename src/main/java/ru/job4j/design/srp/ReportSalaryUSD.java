@@ -4,8 +4,8 @@ import java.util.function.Predicate;
 
 public class ReportSalaryUSD implements Report {
 
+    public static final double COURSE_USD = 65.00;
     private Store store;
-    private double courseUSD = 65.00;
 
     public ReportSalaryUSD(Store store) {
         this.store = store;
@@ -17,7 +17,7 @@ public class ReportSalaryUSD implements Report {
         text.append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator());
         for (Employee employee : store.findBy(filter)) {
-            double salaryUSD = employee.getSalary() / courseUSD;
+            double salaryUSD = employee.getSalary() / COURSE_USD;
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
