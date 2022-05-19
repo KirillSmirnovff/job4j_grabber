@@ -15,7 +15,7 @@ public class ControlQuality {
 
     public void control(Food food) {
         Calendar now = GregorianCalendar.getInstance();
-        double hoursExpired =  ChronoUnit.HOURS.between(now.toInstant(), food.getCreateDate().toInstant());
+        double hoursExpired =  Math.abs(ChronoUnit.HOURS.between(now.toInstant(), food.getCreateDate().toInstant()));
         double totalHours = ChronoUnit.HOURS.between(food.getCreateDate().toInstant(), food.getExpiryDate().toInstant());
         double expiredPercentage = hoursExpired / totalHours * 100;
         for (Store store : memStore.getAllStorages().values()) {

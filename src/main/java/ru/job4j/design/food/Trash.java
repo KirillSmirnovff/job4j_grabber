@@ -15,4 +15,14 @@ public class Trash implements Store {
         }
         return result;
     }
+
+    public List<Food> getByName(String name) {
+        List<Food> result = new ArrayList<>();
+        for (Food food : storage) {
+            if (name.equals(food.getName())) {
+                result.add(food);
+            }
+        }
+        return result;
+    }
 }

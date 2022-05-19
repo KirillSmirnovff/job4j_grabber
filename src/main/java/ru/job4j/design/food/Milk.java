@@ -10,12 +10,15 @@ public class Milk extends Food {
     private double price;
     private int discount;
 
-    public Milk(String name, Calendar expiryDate, Calendar createDate, double price, int discount) {
+    public Milk(String name, Calendar expiryDate, Calendar createDate, double price) {
+        if (createDate.compareTo(expiryDate) > 0) {
+            throw  new IllegalArgumentException("Create date cannot be equal or go after expiry date");
+        }
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
         this.price = price;
-        this.discount = discount;
+
     }
 
     public Milk() {
@@ -39,6 +42,9 @@ public class Milk extends Food {
 
     @Override
     public void setExpiryDate(Calendar expiryDate) {
+        if (createDate.compareTo(expiryDate) > 0) {
+            throw  new IllegalArgumentException("Create date cannot be equal or go after expiry date");
+        }
         this.expiryDate = expiryDate;
     }
 
@@ -49,6 +55,9 @@ public class Milk extends Food {
 
     @Override
     public void setCreateDate(Calendar createDate) {
+        if (createDate.compareTo(expiryDate) > 0) {
+            throw  new IllegalArgumentException("Create date cannot be equal or go after expiry date");
+        }
         this.createDate = createDate;
     }
 

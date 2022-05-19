@@ -21,4 +21,15 @@ public class Shop implements Store {
 
         return result;
     }
+
+    @Override
+    public List<Food> getByName(String name) {
+        List<Food> result = new ArrayList<>();
+        for (Food food : storage) {
+            if (name.equals(food.getName())) {
+                result.add(food);
+            }
+        }
+        return result;
+    }
 }
