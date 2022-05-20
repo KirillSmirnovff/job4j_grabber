@@ -3,7 +3,6 @@ package ru.job4j.design.food;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class ControlQuality {
 
@@ -13,8 +12,7 @@ public class ControlQuality {
         this.memStore = memStore;
     }
 
-    public void control(Food food) {
-        Calendar now = GregorianCalendar.getInstance();
+    public void control(Food food, Calendar now) {
         double hoursExpired =  Math.abs(ChronoUnit.HOURS.between(now.toInstant(), food.getCreateDate().toInstant()));
         double totalHours = ChronoUnit.HOURS.between(food.getCreateDate().toInstant(), food.getExpiryDate().toInstant());
         double expiredPercentage = hoursExpired / totalHours * 100;
