@@ -8,7 +8,7 @@ public class Warehouse implements Store {
     private List<Food> storage = new ArrayList<>();
 
     @Override
-    public Boolean put(Food food, double expiredPercentage) {
+    public boolean put(Food food, double expiredPercentage) {
         boolean result = expiredPercentage < 25;
         if (result) {
             storage.add(food);

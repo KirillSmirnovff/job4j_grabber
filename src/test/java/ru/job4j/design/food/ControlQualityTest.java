@@ -14,60 +14,64 @@ public class ControlQualityTest {
     @Test
     public void whenLessThen25() {
         Calendar now = new GregorianCalendar(2022, Calendar.MAY, 19);
-        MemStore memStore = new MemStore();
-        memStore.getAllStorages().put("Warehouse", new Warehouse());
-        memStore.getAllStorages().put("Shop", new Shop());
-        memStore.getAllStorages().put("Trash", new Trash());
+        List<Store> memStore = List.of(
+                new Warehouse(),
+                new Shop(),
+                new Trash()
+        );
         ControlQuality controlQuality = new ControlQuality(memStore);
         Food food = new Cheese("Cheddar", new GregorianCalendar(2022, Calendar.MAY, 28),
                 new GregorianCalendar(2022, Calendar.MAY, 18), 400);
         controlQuality.control(food, now);
         List<Food> expected = List.of(food);
-        assertThat(memStore.getAllStorages().get("Warehouse").getByName("Cheddar"), is(expected));
+        assertThat(memStore.get(0).getByName("Cheddar"), is(expected));
     }
 
     @Test
     public void whenMoreThen25AndLessThen75() {
         Calendar now = new GregorianCalendar(2022, Calendar.MAY, 19);
-        MemStore memStore = new MemStore();
-        memStore.getAllStorages().put("Warehouse", new Warehouse());
-        memStore.getAllStorages().put("Shop", new Shop());
-        memStore.getAllStorages().put("Trash", new Trash());
+        List<Store> memStore = List.of(
+                new Warehouse(),
+                new Shop(),
+                new Trash()
+        );
         ControlQuality controlQuality = new ControlQuality(memStore);
         Food food = new Cheese("Cheddar", new GregorianCalendar(2022, Calendar.MAY, 25),
                 new GregorianCalendar(2022, Calendar.MAY, 15), 400);
         controlQuality.control(food, now);
         List<Food> expected = List.of(food);
-        assertThat(memStore.getAllStorages().get("Shop").getByName("Cheddar"), is(expected));
+        assertThat(memStore.get(1).getByName("Cheddar"), is(expected));
     }
 
     @Test
     public void whenMoreThen75AndLessThen100() {
         Calendar now = new GregorianCalendar(2022, Calendar.MAY, 19);
-        MemStore memStore = new MemStore();
-        memStore.getAllStorages().put("Warehouse", new Warehouse());
-        memStore.getAllStorages().put("Shop", new Shop());
-        memStore.getAllStorages().put("Trash", new Trash());
+        List<Store> memStore = List.of(
+                new Warehouse(),
+                new Shop(),
+                new Trash()
+        );
         ControlQuality controlQuality = new ControlQuality(memStore);
         Food food = new Cheese("Cheddar", new GregorianCalendar(2022, Calendar.MAY, 20),
                 new GregorianCalendar(2022, Calendar.MAY, 12), 400);
         controlQuality.control(food, now);
         int expectedDiscount = 50;
-        assertThat(memStore.getAllStorages().get("Shop").getByName("Cheddar").get(0).getDiscount(), is(expectedDiscount));
+        assertThat(memStore.get(1).getByName("Cheddar").get(0).getDiscount(), is(expectedDiscount));
     }
 
     @Test
     public void whenMoreThen100() {
         Calendar now = new GregorianCalendar(2022, Calendar.MAY, 19);
-        MemStore memStore = new MemStore();
-        memStore.getAllStorages().put("Warehouse", new Warehouse());
-        memStore.getAllStorages().put("Shop", new Shop());
-        memStore.getAllStorages().put("Trash", new Trash());
+        List<Store> memStore = List.of(
+                new Warehouse(),
+                new Shop(),
+                new Trash()
+        );
         ControlQuality controlQuality = new ControlQuality(memStore);
         Food food = new Cheese("Cheddar", new GregorianCalendar(2022, Calendar.MAY, 18),
                 new GregorianCalendar(2022, Calendar.MAY, 15), 400);
         controlQuality.control(food, now);
         List<Food> expected = List.of(food);
-        assertThat(memStore.getAllStorages().get("Trash").getByName("Cheddar"), is(expected));
+        assertThat(memStore.get(2).getByName("Cheddar"), is(expected));
     }
 }
