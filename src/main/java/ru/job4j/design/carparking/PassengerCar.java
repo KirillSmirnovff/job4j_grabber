@@ -1,25 +1,20 @@
 package ru.job4j.design.carparking;
 
+import static ru.job4j.design.carparking.Constants.*;
+
 public class PassengerCar implements Car {
 
     private String name;
-    private double size;
+    private final double size = PASSENGER_CAR_SIZE;
 
-    public PassengerCar(String name, double size) {
-        if (size > 1) {
-            throw new IllegalArgumentException("This car needs to be a Truck");
-        }
+    public PassengerCar(String name) {
         this.name = name;
-        this.size = size;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setSize(double size) {
-        this.size = size;
-    }
 
     @Override
      public double getSize() {

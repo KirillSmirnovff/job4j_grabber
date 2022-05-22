@@ -1,12 +1,14 @@
 package ru.job4j.design.carparking;
 
+import static ru.job4j.design.carparking.Constants.*;
+
 public class Truck implements Car {
 
     private String name;
     private double size;
 
     public Truck(String name, double size) {
-        if (size <= 1) {
+        if (size <= PASSENGER_CAR_SIZE) {
             throw new IllegalArgumentException("This car needs to be a passenger car");
         }
         this.name = name;

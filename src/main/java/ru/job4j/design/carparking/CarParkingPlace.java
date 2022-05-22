@@ -1,5 +1,6 @@
 package ru.job4j.design.carparking;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +18,21 @@ public class CarParkingPlace implements ParkingPlace {
     }
 
     @Override
-    public int getFreeCells() {
-        return freeCells;
-    }
-
-    @Override
     public List<Car> getAll() {
-        return null;
+        return getParkingCars();
     }
 
     @Override
-    public void parking(Car car, int size) {
-
+    public boolean parking(Car car) {
+        int size = (int) Math.ceil(car.getSize());
+        boolean result = freeCells >= size;
+        if (result) {
+            parkingCars.add(car);
+            freeCells -= size;
+            System.out.println(car + " distributed to passenger car parking");
+        } else {
+            System.out.println("Passenger car parking is full!");
+        }
+        return result;
     }
 }

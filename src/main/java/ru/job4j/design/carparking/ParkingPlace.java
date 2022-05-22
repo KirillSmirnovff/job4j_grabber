@@ -4,9 +4,7 @@ import java.util.List;
 
 public interface ParkingPlace {
 
-    void parking(Car car, int size);
-
-    int getFreeCells();
+    boolean parking(Car car);
 
     List<Car> getAll();
 }
