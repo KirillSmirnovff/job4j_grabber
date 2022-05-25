@@ -13,7 +13,7 @@ public class ParkingControl {
     }
 
     public boolean distribute(Car car) {
-        double size = car.getSize();
+        int size = car.getSize();
         boolean result = size == PASSENGER_CAR_SIZE;
         if (result) {
             result = carParking.parking(car);

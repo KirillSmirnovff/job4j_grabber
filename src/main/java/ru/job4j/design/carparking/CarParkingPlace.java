@@ -13,18 +13,14 @@ public class CarParkingPlace implements ParkingPlace {
         this.freeCells = freeCells;
     }
 
-    public List<Car> getParkingCars() {
-        return parkingCars;
-    }
-
     @Override
     public List<Car> getAll() {
-        return getParkingCars();
+        return List.copyOf(parkingCars);
     }
 
     @Override
     public boolean parking(Car car) {
-        int size = (int) Math.ceil(car.getSize());
+        int size = car.getSize();
         boolean result = freeCells >= size;
         if (result) {
             parkingCars.add(car);

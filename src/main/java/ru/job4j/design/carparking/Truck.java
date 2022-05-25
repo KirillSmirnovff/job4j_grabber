@@ -5,9 +5,9 @@ import static ru.job4j.design.carparking.Constants.*;
 public class Truck implements Car {
 
     private String name;
-    private double size;
+    private int size;
 
-    public Truck(String name, double size) {
+    public Truck(String name, int size) {
         if (size <= PASSENGER_CAR_SIZE) {
             throw new IllegalArgumentException("This car needs to be a passenger car");
         }
@@ -19,7 +19,7 @@ public class Truck implements Car {
         this.name = name;
     }
 
-    public void setSize(double size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
@@ -29,7 +29,7 @@ public class Truck implements Car {
     }
 
     @Override
-    public double getSize() {
+    public int getSize() {
         return size;
     }
 

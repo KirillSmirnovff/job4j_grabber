@@ -12,13 +12,9 @@ public class TruckParkingPlace implements ParkingPlace {
         this.freeCells = freeCells;
     }
 
-    public List<Car> getParkingCars() {
-        return parkingCars;
-    }
-
     @Override
     public List<Car> getAll() {
-        return getParkingCars();
+        return List.copyOf(parkingCars);
     }
 
     @Override

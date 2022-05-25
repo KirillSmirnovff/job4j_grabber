@@ -2,7 +2,7 @@ package ru.job4j.design.carparking;
 
 public interface Car {
 
-    double getSize();
+    int getSize();
 
     String getName();
 }
