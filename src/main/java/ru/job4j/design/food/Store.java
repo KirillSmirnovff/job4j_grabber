@@ -6,6 +6,6 @@ public interface Store {
 
     boolean put(Food food, double expiredPercentage);
 
-    List<Food> getByName(String name);
+    List<Food> getStore();
 
 }

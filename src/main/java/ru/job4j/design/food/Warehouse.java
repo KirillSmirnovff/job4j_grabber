@@ -16,13 +16,8 @@ public class Warehouse implements Store {
         return result;
     }
 
-    public List<Food> getByName(String name) {
-        List<Food> result = new ArrayList<>();
-        for (Food food : storage) {
-            if (name.equals(food.getName())) {
-                result.add(food);
-            }
-        }
-        return result;
+    @Override
+    public List<Food> getStore() {
+        return List.copyOf(storage);
     }
 }

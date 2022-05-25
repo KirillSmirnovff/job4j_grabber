@@ -10,7 +10,7 @@ public class Food {
     private double price;
     private int discount;
 
-    public Food(String name, Calendar expiryDate, Calendar createDate, double price) {
+    public Food(String name, Calendar expiryDate, Calendar createDate, double price, int discount) {
         if (createDate.compareTo(expiryDate) > 0) {
             throw  new IllegalArgumentException("Create date cannot be equal or go after expiry date");
         }
@@ -18,6 +18,7 @@ public class Food {
         this.expiryDate = expiryDate;
         this.createDate = createDate;
         this.price = price;
+        this.discount = discount;
     }
 
     public Food() {
