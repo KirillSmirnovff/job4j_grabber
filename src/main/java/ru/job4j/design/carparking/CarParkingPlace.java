@@ -7,10 +7,11 @@ import java.util.List;
 public class CarParkingPlace implements ParkingPlace {
 
     private int freeCells;
-    private final List<Car> parkingCars = new ArrayList<>();
+    private final List<Car> parkingCars;
 
     public CarParkingPlace(int freeCells) {
         this.freeCells = freeCells;
+        this.parkingCars = new ArrayList<>(freeCells);
     }
 
     @Override

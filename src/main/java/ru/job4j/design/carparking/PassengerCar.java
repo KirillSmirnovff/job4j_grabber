@@ -5,7 +5,7 @@ import static ru.job4j.design.carparking.Constants.*;
 public class PassengerCar implements Car {
 
     private String name;
-    private final int size = PASSENGER_CAR_SIZE;
+    private final int size = REGULAR_CAR_SIZE;
 
     public PassengerCar(String name) {
         this.name = name;

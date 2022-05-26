@@ -8,7 +8,7 @@ public class Truck implements Car {
     private int size;
 
     public Truck(String name, int size) {
-        if (size <= PASSENGER_CAR_SIZE) {
+        if (size <= REGULAR_CAR_SIZE) {
             throw new IllegalArgumentException("This car needs to be a passenger car");
         }
         this.name = name;
