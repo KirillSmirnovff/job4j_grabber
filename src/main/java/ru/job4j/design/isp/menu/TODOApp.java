@@ -17,18 +17,22 @@ public class TODOApp {
                 if ("1".equals(in)) {
                     System.out.println("Enter your 'parent' task name or enter 'Root' to place it in root tasks:");
                     String parentName = input.readLine();
+                    if (parentName.isBlank()) {
+                        System.out.println("Parent's name cannot be empty!");
+                        continue;
+                    }
                     System.out.println("Enter your task name:");
                     String taskName = input.readLine();
-                    try {
-                        boolean result = menu.add(parentName, taskName, STUB_ACTION);
-                        if (result) {
-                            System.out.println("Task successfully added.");
-                            continue;
-                        }
-                        System.out.printf("Cannot find parent task with %s name. Try again!%s", parentName, System.lineSeparator());
-                    } catch (IllegalArgumentException ex) {
-                        ex.printStackTrace();
+                    if (taskName.isBlank()) {
+                        System.out.println("Task's name cannot be empty!");
+                        continue;
                     }
+                    boolean result = menu.add(parentName, taskName, STUB_ACTION);
+                    if (result) {
+                        System.out.println("Task successfully added.");
+                        continue;
+                    }
+                    System.out.println("Task cannot be added.");
                 } else if ("2".equals(in)) {
                     System.out.println("Your taskbar:");
                     printer.print(menu);

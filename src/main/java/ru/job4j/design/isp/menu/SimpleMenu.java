@@ -8,14 +8,11 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-        if (childName.isBlank() || parentName.isBlank()) {
-            throw new IllegalArgumentException("Task names cannot be empty!");
-        }
-        if (findItem(childName).isPresent()) {
-            throw new IllegalArgumentException("Task with that name is already exists!");
-        }
         boolean result = Objects.equals(parentName, Menu.ROOT);
-        if (result) {
+        if (findItem(childName).isPresent()) {
+            System.out.println("Task with that name is already exists!");
+            result = false;
+        } else if (result) {
             rootElements.add(new SimpleMenuItem(childName, actionDelegate));
         } else {
             Optional<ItemInfo> element = findItem(parentName);
@@ -31,21 +28,25 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Iterator<MenuItemInfo> it = iterator();
-        Optional<MenuItemInfo> result = Optional.empty();
-        while (it.hasNext()) {
-            MenuItemInfo menuItemInfo = it.next();
-            if (itemName.equals(menuItemInfo.getName())) {
-                result = Optional.of(menuItemInfo);
-                break;
-            }
-        }
-        return result;
+        return findItem(itemName).map(i -> new MenuItemInfo(i.menuItem, i.number));
     }
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        return new MenuInfoIterator();
+        return new Iterator<MenuItemInfo>() {
+            final Iterator<ItemInfo> it = new DFSIterator();
+
+            @Override
+            public boolean hasNext() {
+                return it.hasNext();
+            }
+
+            @Override
+            public MenuItemInfo next() {
+                ItemInfo itemInfo = it.next();
+                return new MenuItemInfo(itemInfo.menuItem, itemInfo.number);
+            }
+        };
     }
 
     private Optional<ItemInfo> findItem(String name) {
@@ -121,44 +122,6 @@ public class SimpleMenu implements Menu {
                 numbers.addFirst(lastNumber.concat(String.valueOf(currentNumber--)).concat("."));
             }
             return new ItemInfo(current, lastNumber);
-        }
-
-    }
-
-    private class MenuInfoIterator implements Iterator<MenuItemInfo> {
-
-        Deque<MenuItem> stack = new LinkedList<>();
-
-        Deque<String> numbers = new LinkedList<>();
-
-        MenuInfoIterator() {
-            int number = 1;
-            for (MenuItem item : rootElements) {
-                stack.addLast(item);
-                numbers.addLast(String.valueOf(number++).concat("."));
-            }
-        }
-
-        @Override
-        public boolean hasNext() {
-            return !stack.isEmpty();
-        }
-
-        @Override
-        public MenuItemInfo next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            MenuItem current = stack.removeFirst();
-            String lastNumber = numbers.removeFirst();
-            List<MenuItem> children = current.getChildren();
-            int currentNumber = children.size();
-            for (var i = children.listIterator(children.size()); i.hasPrevious();) {
-                stack.addFirst(i.previous());
-                numbers.addFirst(lastNumber.concat(String.valueOf(currentNumber--)).concat("."));
-            }
-            ItemInfo info = new ItemInfo(current, lastNumber);
-            return new MenuItemInfo(info.menuItem, info.number);
         }
 
     }

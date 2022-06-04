@@ -12,7 +12,7 @@ public class StubPrinter implements MenuPrinter {
             int spaceSize = (int) number.chars().
                     filter(ch -> ch == '.').
                     count() - 1;
-            buffer.append("----".repeat(spaceSize))
+            buffer.append(MENU_INDENT.repeat(spaceSize))
                     .append(number)
                     .append(name)
                     .append(System.lineSeparator());
