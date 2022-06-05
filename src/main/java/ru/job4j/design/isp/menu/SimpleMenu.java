@@ -9,7 +9,8 @@ public class SimpleMenu implements Menu {
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
         boolean result = Objects.equals(parentName, Menu.ROOT);
-        if (findItem(childName).isPresent()) {
+        boolean duplicate = findItem(childName).isPresent();
+        if (duplicate) {
             System.out.println("Task with that name is already exists!");
             result = false;
         } else if (result) {
