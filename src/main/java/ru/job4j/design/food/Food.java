@@ -9,6 +9,7 @@ public class Food {
     private Calendar createDate;
     private double price;
     private int discount;
+    boolean discounted = false;
 
     public Food(String name, Calendar expiryDate, Calendar createDate, double price, int discount) {
         if (createDate.compareTo(expiryDate) > 0) {
@@ -69,6 +70,14 @@ public class Food {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public boolean isDiscounted() {
+        return discounted;
+    }
+
+    public void setDiscounted(boolean discounted) {
+        this.discounted = discounted;
     }
 
     @Override

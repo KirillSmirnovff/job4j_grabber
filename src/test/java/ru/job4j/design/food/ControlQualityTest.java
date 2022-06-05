@@ -187,4 +187,79 @@ public class ControlQualityTest {
         assertThat(shop.getStore(), is(expectedShop));
         assertThat(shop.getStore().get(1).getPrice(), is(700.0));
     }
+
+    @Test
+    public void whenResort() {
+        Calendar now = Calendar.getInstance();
+        Calendar resortDate = new GregorianCalendar(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) + 3
+        );
+        Calendar createDate = new GregorianCalendar(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) - 1
+        );
+        Calendar expiryDate = new GregorianCalendar(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) + 10
+        );
+        Store warehouse = new Warehouse();
+        Store shop = new Shop();
+        Store trash = new Trash();
+        ControlQuality controlQuality = new ControlQuality(List.of(
+                warehouse,
+                shop,
+                trash
+        ));
+        Food cheese = new Cheese("Cheddar", (Calendar) expiryDate.clone(), (Calendar) createDate.clone(), 500, 30);
+        createDate.set(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) - 5
+        );
+        expiryDate.set(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) + 5
+        );
+        Food milk = new Milk("Prostokvashino", (Calendar) expiryDate.clone(), (Calendar) createDate.clone(), 100, 40);
+        createDate.set(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) - 10
+        );
+        expiryDate.set(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) + 4
+        );
+        Food cheeseSecond = new Cheese("Parmesan", (Calendar) expiryDate.clone(), (Calendar) createDate.clone(), 1000, 30);
+        createDate.set(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) - 10
+        );
+        expiryDate.set(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH) + 2
+        );
+        Food milkSecond = new Milk("Vkusnoteevo", (Calendar) expiryDate.clone(), (Calendar) createDate.clone(), 100, 40);
+        controlQuality.control(cheese, now);
+        controlQuality.control(milk, now);
+        controlQuality.control(cheeseSecond, now);
+        controlQuality.control(milkSecond, now);
+        controlQuality.resort(resortDate);
+        List<Food> expectedWarehouse = List.of();
+        List<Food> expectedShop = List.of(cheese, milk, cheeseSecond);
+        List<Food> expectedTrash = List.of(milkSecond);
+        assertThat(trash.getStore(), is(expectedTrash));
+        assertThat(warehouse.getStore(), is(expectedWarehouse));
+        assertThat(shop.getStore(), is(expectedShop));
+        assertThat(shop.getStore().get(1).getPrice(), is(60.0));
+        assertThat(shop.getStore().get(2).getPrice(), is(700.0));
+    }
 }

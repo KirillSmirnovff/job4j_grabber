@@ -15,6 +15,7 @@ public class Shop implements Store {
             result = true;
         } else if (expiredPercentage >= 75 && expiredPercentage < 100) {
             food.setPrice(food.getPrice() - food.getPrice() * food.getDiscount() / 100);
+            food.setDiscounted(true);
             storage.add(food);
             result = true;
         }
@@ -25,5 +26,10 @@ public class Shop implements Store {
     @Override
     public List<Food> getStore() {
         return List.copyOf(storage);
+    }
+
+    @Override
+    public void clear() {
+        storage.clear();
     }
 }

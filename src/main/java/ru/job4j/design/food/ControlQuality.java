@@ -2,6 +2,7 @@ package ru.job4j.design.food;
 
 
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,6 +21,20 @@ public class ControlQuality {
             if (result) {
                 break;
             }
+        }
+    }
+
+    public void resort(Calendar now) {
+        List<Food> resortList = new ArrayList<>();
+        for (Store store : memStore) {
+            resortList.addAll(store.getStore());
+            store.clear();
+        }
+        for (Food food : resortList) {
+            if (food.isDiscounted()) {
+                food.setPrice(food.getPrice() * 100 / (100 - food.getDiscount()));
+            }
+            control(food, now);
         }
     }
 
