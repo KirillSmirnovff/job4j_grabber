@@ -10,7 +10,7 @@ public class ConsolePrinter implements MenuPrinter {
             int spaceSize = (int) number.chars().
                     filter(ch -> ch == '.').
                     count() - 1;
-            System.out.println("----".repeat(spaceSize) + number + name);
+            System.out.println(MENU_INDENT.repeat(spaceSize) + number + name);
         }
     }
 
